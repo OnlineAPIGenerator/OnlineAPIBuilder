@@ -20,9 +20,16 @@ namespace OnlineAPIBuilder.Controllers
 
         // POST api/{client}/{version}/{callName}/{*.}
         [HttpPost("{*.}")]
-        public bool Post([FromBody]string value)
+        public List<object> Post()
         {
-            return true;
+            var allKeys = Request.Form.Keys;
+            var result = new List<object>();
+            foreach (var key in allKeys)
+            {
+                var value = Request.Form[key];
+                result.Add(new { key, value });
+            }
+            return result;
         }
 
         // PUT api/{client}/{version}/{callName}/{*.}
