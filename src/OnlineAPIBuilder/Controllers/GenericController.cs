@@ -8,28 +8,26 @@ using OnlineAPIBuilder.Classes;
 namespace OnlineAPIBuilder.Controllers
 {
     [Route("api/{client}/{version}/{callName}")]
-    public class ValuesController : Controller
+    public class GenericController : BaseController
     {
         // GET: api/{client}/{version}/{callName}/{*.}
         [HttpGet("{*.}")]
         public List<object> Get()
         {
-            string client = Helper.GetUriSegment(Request, 2);
-            string version = Helper.GetUriSegment(Request, 3);
-            string callName = Helper.GetUriSegment(Request, 4);
             var x = new object[] { "value1", "value2" };
             return x.ToList();
         }
 
         // POST api/{client}/{version}/{callName}/{*.}
         [HttpPost("{*.}")]
-        public void Post([FromBody]string value)
+        public bool Post([FromBody]string value)
         {
+            return true;
         }
 
         // PUT api/{client}/{version}/{callName}/{*.}
         [HttpPut("{*.}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put([FromBody]string value)
         {
         }
 
