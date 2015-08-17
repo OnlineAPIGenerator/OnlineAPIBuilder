@@ -112,7 +112,7 @@ namespace OnlineAPIBuilder.Classes
                 }
             }
             if (routeParametersName.Length != result.Count)
-                throw new ArgumentException(string.Format("Please provide values for parameters \"{0}\"", string.Join(", ", missingParameters)));
+                throw new ArgumentException(string.Format("Please provide value{1} for parameter{1} \"{0}\"", string.Join(", ", missingParameters), missingParameters.Count > 1 ? "s" : ""));
             return result;
         }
 
