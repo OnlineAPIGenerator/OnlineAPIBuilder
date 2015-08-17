@@ -15,6 +15,9 @@ namespace OnlineAPIBuilder.Controllers
         [HttpGet("{*.}")]
         public List<object> Get()
         {
+            //query string test /api/09090/v1.0/GetAllThings?where=skopje&orderby=id&top=5&firstname=pero
+            //route values test /api/09090/v1.0/GetAllThings/skopje/id/5/pero
+            //var values = GetRequesData("where", "orderby", "top", "firstname");
             var x = new object[] { "value1", "value2" };
             return x.ToList();
         }

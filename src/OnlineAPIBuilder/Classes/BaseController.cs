@@ -73,5 +73,52 @@ namespace OnlineAPIBuilder.Classes
         }
 
         #endregion
+
+        #region Public Methods
+
+        [NonAction]
+        public Dictionary<string, string> GetRequesData(params string[] routeParametersName)
+        {
+            var result = new Dictionary<string, string>();
+            if (routeParametersName == null)
+                routeParametersName = new string[0];
+            var missingParameters = new List<string>();
+            if (routeParametersName.Length > 0)
+            {
+                //If query string contains data, we will try to find all values in the query string, othewise we will look for the values in the route paramssss
+                if (Request.QueryString != null && Request.QueryString.HasValue)
+                {
+                    foreach (var param in routeParametersName)
+                    {
+                        var qsValue = Request.Query[param] as string;
+                        if (!string.IsNullOrEmpty(qsValue))
+                            result.Add(param, qsValue);
+                        else
+                            missingParameters.Add(param);
+                    }
+                }
+                else
+                {
+                    var firstAvailableUrlIndex = 5;
+                    for (var i = 0; i < routeParametersName.Length; i++)
+                    {
+                        var param = routeParametersName[i];
+                        var urlValue = Helper.GetUriSegment(Request, firstAvailableUrlIndex + i);
+                        if (!string.IsNullOrEmpty(urlValue))
+                            result.Add(param, urlValue);
+                        else
+                            missingParameters.Add(param);
+                    }
+                }
+            }
+            if (routeParametersName.Length != result.Count)
+                throw new ArgumentException(string.Format("Please provide values for parameters \"{0}\"", string.Join(", ", missingParameters)));
+            return result;
+        }
+
+        #endregion
+
+        #region Private Methods
+        #endregion
     }
 }
