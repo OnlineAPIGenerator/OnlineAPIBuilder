@@ -24,15 +24,18 @@ namespace OnlineAPIBuilder.Classes
         }
 
         /// <summary>
-        /// Parses segments from the Url path
+        /// Parses segments from the Url path, null if segment is not found
         /// </summary>
         /// <param name="request">Basic HTTP Request</param>
         /// <param name="segmentNo">The number of the url segment that you wish to be retrieved</param>
-        /// <returns>Segment of the url that you request</returns>
+        /// <returns>Segment of the url that you request, null if segment not found</returns>
         public static string GetUriSegment(HttpRequest request, int segmentNo)
         {
             var segments = request.Path.ToUriComponent().Split('/');
-            return segments[segmentNo];
+
+            if (segments.Length >= segmentNo + 1)
+                return segments[segmentNo];
+            return null;
         }
     }
 }
