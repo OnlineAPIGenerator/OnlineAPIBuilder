@@ -85,7 +85,7 @@ namespace OnlineAPIBuilder.Classes
             var missingParameters = new List<string>();
             if (routeParametersName.Length > 0)
             {
-                //If query string contains data, we will try to find all values in the query string, othewise we will look for the values in the route paramssss
+                //If query string contains data, we will try to find all values in the query string, otherwise we will look for the values in the route params
                 if (Request.QueryString != null && Request.QueryString.HasValue)
                 {
                     foreach (var param in routeParametersName)
