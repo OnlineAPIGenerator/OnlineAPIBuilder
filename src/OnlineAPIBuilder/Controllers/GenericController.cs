@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using OnlineAPIBuilder.Classes;
+using OnlineAPIBuilder.ViewModels;
 
 namespace OnlineAPIBuilder.Controllers
 {
@@ -20,15 +21,24 @@ namespace OnlineAPIBuilder.Controllers
 
         // POST api/{client}/{version}/{callName}/{*.}
         [HttpPost("{*.}")]
-        public List<object> Post()
+        public List<object> Post([FromBody]Dictionary<object, object> test)
         {
-            var allKeys = Request.Form.Keys;
             var result = new List<object>();
-            foreach (var key in allKeys)
+            if (test == null || test.Count == 0)
             {
-                var value = Request.Form[key];
-                result.Add(new { key, value });
+                var allKeys = Request.Form.Keys;
+                foreach (var key in allKeys)
+                {
+                    var value = Request.Form[key];
+                    result.Add(new { key, value });
+                }
             }
+            else
+                foreach (var key in test.Keys)
+                {
+                    var value = test[key];
+                    result.Add(new { key, value });
+                }
             return result;
         }
 
